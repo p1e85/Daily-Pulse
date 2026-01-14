@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Daily Pulse | Checklist</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/liststyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-cyber">
+
+    <div id="auth-overlay" class="overlay">
+        <div class="modal-content auth-card">
+            <h1 id="auth-title">Sign In</h1>
+            <p id="auth-subtitle">Sync your day with P1 Creations.</p>
+            
+            <div class="auth-inputs">
+                <input type="email" id="login-email" placeholder="Email Address" autocomplete="email">
+                <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+                <button type="button" class="btn-primary" id="auth-main-btn" onclick="app.handleAuth()">Sign In</button>
+            </div>
+
+            <p class="toggle-text">
+                <span id="toggle-msg">New here?</span> 
+                <a href="javascript:void(0)" onclick="app.toggleAuthMode()" id="auth-toggle-link">Create Account</a>
+            </p>
+
+            <p class="legal-links">
+                By entering, you agree to our 
+                <a href="javascript:void(0)" onclick="app.toggleModal('legal-modal', true)">TOS & Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+    <main id="main-app" class="app-container hidden">
+        <header>
+            <div class="header-top">
+                <select id="theme-selector" onchange="app.changeTheme(this.value)">
+                    <option value="theme-cyber">Cyber Dark</option>
+                    <option value="theme-ocean">Ocean Breeze</option>
+                    <option value="theme-sunset">Sunset Glow</option>
+                </select>
+                <button type="button" class="add-main-btn" onclick="app.toggleModal('custom-modal', true)">+</button>
+            </div>
+
+            <div class="brand">
+                <div class="title-row">
+                    <h1 id="dynamic-title">Good Day</h1>
+                    <div class="calendar-icon">
+                        <div id="cal-month" class="cal-top">---</div>
+                        <div id="cal-date" class="cal-body">--</div>
+                    </div>
+                </div>
+                <div class="stats-box">
+                    <span id="score">Score: 0%</span>
+                </div>
+            </div>
+            <button type="button" class="logout-link" onclick="app.logout()">Sign Out</button>
+        </header>
+
+        <ul id="task-list"></ul>
+
+        <nav class="bottom-nav">
+            <button type="button" class="nav-item" onclick="app.haptic(); app.toggleModal('template-modal', true)">
+                <span>📋</span> Routines
+            </button>
+            
+            <button type="button" class="nav-item" onclick="app.haptic(); app.showHistory()">
+                <span>📊</span> History
+            </button>
+
+            <a href="https://www.paypal.com/donate/?hosted_button_id=5GLCZ3YHJFNGS" target="_blank" class="nav-item support-link" onclick="app.haptic()">
+    <span>💙</span> Support
+</a>
+
+        </nav>
+    </main>
+
+    <div id="custom-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Add Reminder</h2>
+            <input type="text" id="task-name" placeholder="What needs doing?">
+            <input type="time" id="task-time">
+            <input type="text" id="task-emoji" placeholder="Emoji (e.g. 🍎)">
+            
+            <div class="modal-actions">
+                <button type="button" class="btn-primary" onclick="app.addCustomTask()">Create Task</button>
+                <button type="button" class="btn-close" onclick="app.toggleModal('custom-modal', false)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="template-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Quick Start</h2>
+            <div class="template-grid">
+                <div class="template-card" onclick="app.applyTemplate('morning')">
+                    <span>☀️</span><p>Morning</p>
+                </div>
+                <div class="template-card" onclick="app.applyTemplate('work')">
+                    <span>💻</span><p>Work</p>
+                </div>
+                <div class="template-card" onclick="app.applyTemplate('health')">
+                    <span>🍎</span><p>Health</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-close" onclick="app.toggleModal('template-modal', false)">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Weekly Progress</h2>
+            <div id="chart-container" class="history-chart">
+                </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-close" onclick="app.toggleModal('history-modal', false)">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="legal-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Terms & Privacy</h2>
+            <div class="scroll-box">
+                <p>Data is stored via Firebase for cross-device access. P1 Creations LLC does not sell your personal data.</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-primary" onclick="app.toggleModal('legal-modal', false)">I Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/listapp.js"></script>
+</body>
+</html>
